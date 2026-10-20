@@ -887,3 +887,24 @@ button {
     flex-direction: column;
   }
 }
+.resume-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.resume-buttons a {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .resume-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resume-buttons a {
+    max-width: 100%;
+  }
+}

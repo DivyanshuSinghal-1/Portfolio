@@ -2,17 +2,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import "./App.css";
+
 const API_URL = "http://localhost:5000";
 
 const projects = [
- {
-  title: "Wealth Management Dashboard",
-  description:
-    "A dashboard project using Databricks, Node.js, Express and React to display client and SIP data.",
-  tech: ["React", "Node.js", "Express", "Databricks"],
-  github: "https://github.com/DivyanshuSinghal-1/wealth-mangement",
-  demo: "#",
-},
+  {
+    title: "Wealth Management Dashboard",
+    description:
+      "A dashboard project using Databricks, Node.js, Express and React to display client and SIP data.",
+    tech: ["React", "Node.js", "Express", "Databricks"],
+    github: "https://github.com/DivyanshuSinghal-1/wealth-mangement",
+    demo: "#",
+  },
   {
     title: "Amazon Clone",
     description:
@@ -42,8 +43,14 @@ const projects = [
 const skills = [
   { category: "Programming", items: ["C", "C++", "Python", "JavaScript"] },
   { category: "Web Development", items: ["HTML", "CSS", "React", "Node.js"] },
-  { category: "Computer Science", items: ["DSA", "DBMS", "Operating Systems", "DAA"] },
-  { category: "Data & AI", items: ["SQL", "Pandas", "Machine Learning", "Databricks"] },
+  {
+    category: "Computer Science",
+    items: ["DSA", "DBMS", "Operating Systems", "DAA"],
+  },
+  {
+    category: "Data & AI",
+    items: ["SQL", "Pandas", "Machine Learning", "Databricks"],
+  },
   { category: "Tools", items: ["Git", "GitHub", "VS Code", "Vercel"] },
 ];
 
@@ -112,6 +119,7 @@ function App() {
       </header>
 
       <main>
+        {/* HERO */}
         <section className="hero section-container" id="home">
           <motion.div
             className="hero-content"
@@ -149,8 +157,31 @@ function App() {
               </a>
             </div>
 
+            {/* RESUME DOWNLOAD BUTTONS */}
+            <div className="resume-buttons">
+              <a
+                className="btn btn-primary"
+                href="/resume.pdf"
+                download="Divyanshu_Singhal_Resume.pdf"
+              >
+                Download Resume (PDF) ↓
+              </a>
+
+              <a
+                className="btn btn-outline"
+                href="/resume.docx"
+                download="Divyanshu_Singhal_Resume.docx"
+              >
+                Download Resume (DOCX) ↓
+              </a>
+            </div>
+
             <div className="social-links">
-              <a href="https://github.com/DivyanshuSinghal-1" target="_blank" rel="noreferrer">
+              <a
+                href="https://github.com/DivyanshuSinghal-1"
+                target="_blank"
+                rel="noreferrer"
+              >
                 GitHub ↗
               </a>
               <a
@@ -195,6 +226,7 @@ function App() {
           </a>
         </section>
 
+        {/* ABOUT */}
         <section className="section-container section" id="about">
           <SectionTitle
             eyebrow="GET TO KNOW ME"
@@ -250,6 +282,7 @@ function App() {
           </div>
         </section>
 
+        {/* SKILLS */}
         <section className="section-container section" id="skills">
           <SectionTitle
             eyebrow="WHAT I WORK WITH"
@@ -281,6 +314,7 @@ function App() {
           </div>
         </section>
 
+        {/* PROJECTS */}
         <section className="section-container section" id="projects">
           <SectionTitle
             eyebrow="SELECTED WORK"
@@ -325,12 +359,14 @@ function App() {
               </motion.article>
             ))}
           </div>
+
           <p className="project-note">
             Replace the sample GitHub and demo links with your actual project
             URLs before publishing.
           </p>
         </section>
 
+        {/* EDUCATION */}
         <section className="section-container section" id="education">
           <SectionTitle
             eyebrow="MY JOURNEY"
@@ -353,114 +389,128 @@ function App() {
           </div>
         </section>
 
+        {/* CONTACT */}
+        <section
+          className="section-container section contact-section"
+          id="contact"
+        >
+          <SectionTitle
+            eyebrow="GET IN TOUCH"
+            title="Let's Connect"
+            description="Have a project idea or want to talk about technology? Reach out."
+          />
 
-        
-<section className="section-container section contact-section" id="contact">
-  <SectionTitle
-    eyebrow="GET IN TOUCH"
-    title="Let's Connect"
-    description="Have a project idea or want to talk about technology? Reach out."
-  />
+          <div className="contact-card">
+            <div>
+              <p className="contact-kicker">HAVE SOMETHING IN MIND?</p>
+              <h3>Let's build something meaningful.</h3>
+              <p>
+                I'm open to connecting with fellow developers, discussing
+                projects and exploring learning opportunities.
+              </p>
+            </div>
 
-  <div className="contact-card">
-    <div>
-      <p className="contact-kicker">HAVE SOMETHING IN MIND?</p>
-      <h3>Let's build something meaningful.</h3>
-      <p>
-        I'm open to connecting with fellow developers, discussing
-        projects and exploring learning opportunities.
-      </p>
-    </div>
+            <a
+              className="btn btn-primary"
+              href="mailto:divyanshusinghal2006@gmail.com"
+            >
+              <span>✉</span> Email Me
+            </a>
+          </div>
 
-    <a
-      className="btn btn-primary"
-      href="mailto:divyanshusinghal2006@gmail.com"
-    >
-      <span>✉</span> Email Me
-    </a>
-  </div>
+          <form
+            className="contact-form"
+            onSubmit={async (e) => {
+              e.preventDefault();
 
-  <form
-    className="contact-form"
-    onSubmit={async (e) => {
-      e.preventDefault();
+              const form = e.currentTarget;
+              const formData = new FormData(form);
 
-      const form = e.currentTarget;
-      const formData = new FormData(form);
+              const data = {
+                name: formData.get("name"),
+                email: formData.get("email"),
+                message: formData.get("message"),
+              };
 
-      const data = {
-        name: formData.get("name"),
-        email: formData.get("email"),
-        message: formData.get("message"),
-      };
+              try {
+                const response = await fetch(`${API_URL}/api/contact`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(data),
+                });
 
-      try {
-        const response = await fetch(`${API_URL}/api/contact`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+                const result = await response.json();
 
-        const result = await response.json();
+                if (!response.ok) {
+                  alert(result.message || "Could not send message");
+                  return;
+                }
 
-        if (!response.ok) {
-          alert(result.message || "Could not send message");
-          return;
-        }
+                alert("Message submitted successfully!");
+                form.reset();
+              } catch (error) {
+                alert(
+                  "Cannot connect to server. Make sure the backend is running."
+                );
+              }
+            }}
+          >
+            <label>
+              Your Name
+              <input
+                name="name"
+                type="text"
+                placeholder="Enter your name"
+                required
+              />
+            </label>
 
-        alert("Message submitted successfully!");
-        form.reset();
-      } catch (error) {
-        alert("Cannot connect to server. Make sure the backend is running.");
-      }
-    }}
-  >
-    <label>
-      Your Name
-      <input name="name" type="text" placeholder="Enter your name" required />
-    </label>
+            <label>
+              Your Email
+              <input
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+            </label>
 
-    <label>
-      Your Email
-      <input name="email" type="email" placeholder="Enter your email" required />
-    </label>
+            <label>
+              Your Message
+              <textarea
+                name="message"
+                placeholder="Write your message..."
+                rows="5"
+                required
+              />
+            </label>
 
-    <label>
-      Your Message
-      <textarea
-        name="message"
-        placeholder="Write your message..."
-        rows="5"
-        required
-      />
-    </label>
+            <button className="btn btn-primary" type="submit">
+              Send Message ↗
+            </button>
+          </form>
 
-    <button className="btn btn-primary" type="submit">
-      Send Message ↗
-    </button>
-  </form>
-
-  <div className="contact-links">
-    <a href="mailto:divyanshusinghal2006@gmail.com">✉ Email</a>
-    <a
-      href="https://github.com/DivyanshuSinghal-1"
-      target="_blank"
-      rel="noreferrer"
-    >
-      GitHub ↗
-    </a>
-    <a
-      href="https://www.linkedin.com/in/divyanshu-singhal-323170321"
-      target="_blank"
-      rel="noreferrer"
-    >
-      LinkedIn ↗
-    </a>
-  </div>
-</section>
-
+          <div className="contact-links">
+            <a href="mailto:divyanshusinghal2006@gmail.com">✉ Email</a>
+            <a
+              href="https://github.com/DivyanshuSinghal-1"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href="https://www.linkedin.com/in/divyanshu-singhal-323170321"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
+        </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="footer">
         <a className="brand" href="#home">
           D<span>.</span>
