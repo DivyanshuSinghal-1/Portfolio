@@ -2,22 +2,23 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import "./App.css";
+const API_URL = "http://localhost:5000";
 
 const projects = [
-  {
-    title: "Wealth Management Dashboard",
-    description:
-      "A dashboard project using Databricks, Node.js, Express and React to display client and SIP data.",
-    tech: ["React", "Node.js", "Express", "Databricks"],
-    github: "https://github.com/",
-    demo: "#",
-  },
+ {
+  title: "Wealth Management Dashboard",
+  description:
+    "A dashboard project using Databricks, Node.js, Express and React to display client and SIP data.",
+  tech: ["React", "Node.js", "Express", "Databricks"],
+  github: "https://github.com/DivyanshuSinghal-1/wealth-mangement",
+  demo: "#",
+},
   {
     title: "Amazon Clone",
     description:
       "A frontend e-commerce interface built to practice responsive layouts and reusable UI components.",
     tech: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/",
+    github: "https://github.com/DivyanshuSinghal-1",
     demo: "#",
   },
   {
@@ -25,7 +26,7 @@ const projects = [
     description:
       "A streaming-platform-inspired frontend project focused on page layout and responsive design.",
     tech: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/",
+    github: "https://github.com/DivyanshuSinghal-1",
     demo: "#",
   },
   {
@@ -149,11 +150,11 @@ function App() {
             </div>
 
             <div className="social-links">
-              <a href="https://github.com/" target="_blank" rel="noreferrer">
+              <a href="https://github.com/DivyanshuSinghal-1" target="_blank" rel="noreferrer">
                 GitHub ↗
               </a>
               <a
-                href="https://www.linkedin.com/"
+                href="https://www.linkedin.com/in/divyanshu-singhal-323170321"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -352,62 +353,112 @@ function App() {
           </div>
         </section>
 
-        <section className="section-container section" id="certifications">
-          <SectionTitle
-            eyebrow="LEARNING & GROWTH"
-            title="Certifications"
-            description="Add your verified certifications and achievements here."
-          />
-          <div className="certification-placeholder">
-            <span className="highlight-icon">✧</span>
-            <h3>Always Learning</h3>
-            <p>
-              This section is ready for your certificates, courses and
-              achievements. Add only credentials you have actually earned.
-            </p>
-          </div>
-        </section>
 
-        <section className="section-container section contact-section" id="contact">
-          <SectionTitle
-            eyebrow="GET IN TOUCH"
-            title="Let's Connect"
-            description="Have a project idea or want to talk about technology? Reach out."
-          />
+        
+<section className="section-container section contact-section" id="contact">
+  <SectionTitle
+    eyebrow="GET IN TOUCH"
+    title="Let's Connect"
+    description="Have a project idea or want to talk about technology? Reach out."
+  />
 
-          <div className="contact-card">
-            <div>
-              <p className="contact-kicker">HAVE SOMETHING IN MIND?</p>
-              <h3>Let's build something meaningful.</h3>
-              <p>
-                I'm open to connecting with fellow developers, discussing
-                projects and exploring learning opportunities.
-              </p>
-            </div>
+  <div className="contact-card">
+    <div>
+      <p className="contact-kicker">HAVE SOMETHING IN MIND?</p>
+      <h3>Let's build something meaningful.</h3>
+      <p>
+        I'm open to connecting with fellow developers, discussing
+        projects and exploring learning opportunities.
+      </p>
+    </div>
 
-            <a className="btn btn-primary" href="mailto:your.email@example.com">
-              <span>✉</span> Email Me
-            </a>
-          </div>
+    <a
+      className="btn btn-primary"
+      href="mailto:divyanshusinghal2006@gmail.com"
+    >
+      <span>✉</span> Email Me
+    </a>
+  </div>
 
-          <div className="contact-links">
-            <a href="mailto:your.email@example.com">✉ Email</a>
-            <a
-              href="https://github.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub ↗
-            </a>
-            <a
-              href="https://www.linkedin.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn ↗
-            </a>
-          </div>
-        </section>
+  <form
+    className="contact-form"
+    onSubmit={async (e) => {
+      e.preventDefault();
+
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+
+      const data = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      };
+
+      try {
+        const response = await fetch(`${API_URL}/api/contact`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          alert(result.message || "Could not send message");
+          return;
+        }
+
+        alert("Message submitted successfully!");
+        form.reset();
+      } catch (error) {
+        alert("Cannot connect to server. Make sure the backend is running.");
+      }
+    }}
+  >
+    <label>
+      Your Name
+      <input name="name" type="text" placeholder="Enter your name" required />
+    </label>
+
+    <label>
+      Your Email
+      <input name="email" type="email" placeholder="Enter your email" required />
+    </label>
+
+    <label>
+      Your Message
+      <textarea
+        name="message"
+        placeholder="Write your message..."
+        rows="5"
+        required
+      />
+    </label>
+
+    <button className="btn btn-primary" type="submit">
+      Send Message ↗
+    </button>
+  </form>
+
+  <div className="contact-links">
+    <a href="mailto:divyanshusinghal2006@gmail.com">✉ Email</a>
+    <a
+      href="https://github.com/DivyanshuSinghal-1"
+      target="_blank"
+      rel="noreferrer"
+    >
+      GitHub ↗
+    </a>
+    <a
+      href="https://www.linkedin.com/in/divyanshu-singhal-323170321"
+      target="_blank"
+      rel="noreferrer"
+    >
+      LinkedIn ↗
+    </a>
+  </div>
+</section>
+
       </main>
 
       <footer className="footer">
