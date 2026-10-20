@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import "./App.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://divyanshu-portfolio-api.onrender.com";
 
 const projects = [
   {
